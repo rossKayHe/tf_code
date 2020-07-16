@@ -38,6 +38,8 @@ resource "aws_security_group" "prod_web"  {
     }
 }
 resource "aws_instance" " prod_web" {
+    count = 2
+
     ami           = "ami-01ebd27ddd89835f4"
     instance_type = t2.nano
 
@@ -51,7 +53,7 @@ resource "aws_instance" " prod_web" {
 } 
 
 resource "aws_eip_asociation" "prod_web" {
-    instance_id = aws_instance.prod_web.instance_id
+    instance_id = aws_instance.prod_web.0.id
     allocation_id = aws.eip.prod_web.id
 }
 
